@@ -1,0 +1,88 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxyktqf2p0mxi"]
+
+[ext_resource type="Script" path="res://src/Main.gd" id="1_rgs8j"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_rgs8j")
+
+[node name="MemoryUsage" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.5
+offset_top = -23.0
+offset_right = 21.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = 128.0
+offset_right = 80.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Writetest" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 120.0
+offset_right = 440.0
+offset_bottom = 151.0
+text = "Load keys
+"
+
+[node name="Movies" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 472.0
+offset_top = 120.0
+offset_right = 569.0
+offset_bottom = 151.0
+text = "Load Movie & Save Movie"
+
+[node name="FileDialogWriteLoad" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+
+[node name="FileDialogWriteSave" type="FileDialog" parent="."]
+title = "Save Keys To File"
+initial_position = 2
+size = Vector2i(452, 400)
+access = 2
+
+[node name="FileDialogLoadMovie" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.MOV")
+
+[node name="FileDialogSaveMovie" type="FileDialog" parent="."]
+initial_position = 2
+size = Vector2i(452, 400)
+access = 2
+filters = PackedStringArray("*.MPG")
+
+[node name="Error" type="AcceptDialog" parent="."]
+title = "PRIMES.TBL NOT LOADED"
+initial_position = 2
+size = Vector2i(250, 80)
+
+[connection signal="pressed" from="Control/Writetest" to="." method="_on_writetest_pressed"]
+[connection signal="pressed" from="Control/Movies" to="." method="_on_movies_pressed"]
+[connection signal="file_selected" from="FileDialogWriteLoad" to="." method="_on_file_dialog_write_load_file_selected"]
+[connection signal="file_selected" from="FileDialogWriteSave" to="." method="_on_file_dialog_write_save_file_selected"]
+[connection signal="file_selected" from="FileDialogLoadMovie" to="." method="_on_file_dialog_load_movie_file_selected"]
+[connection signal="file_selected" from="FileDialogSaveMovie" to="." method="_on_file_dialog_save_movie_file_selected"]
