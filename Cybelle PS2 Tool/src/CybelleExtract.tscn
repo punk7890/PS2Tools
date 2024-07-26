@@ -1,0 +1,80 @@
+[gd_scene load_steps=2 format=3 uid="uid://b58muftj2st80"]
+
+[ext_resource type="Script" path="res://src/CybelleExtract.gd" id="1_mqtac"]
+
+[node name="CybelleExtract" type="Node"]
+script = ExtResource("1_mqtac")
+
+[node name="MemoryUsage" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.5
+offset_top = -23.0
+offset_right = 21.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -20.0
+offset_right = -72.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LoadInterludeFile" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -84.0
+offset_right = 163.0
+offset_bottom = -53.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Extract PAK"
+
+[node name="pngOutToggle" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -16.0
+offset_right = 223.0
+offset_bottom = 15.0
+button_pressed = true
+text = "Convert Images to PNG"
+
+[node name="InterludeLoadPAK" type="FileDialog" parent="."]
+title = "Open File(s)"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Open"
+file_mode = 1
+access = 2
+filters = PackedStringArray("*.PAK", "DATA.IMG")
+
+[node name="InterludeLoadFOLDER" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+
+[connection signal="pressed" from="Control/LoadInterludeFile" to="." method="_on_load_interlude_file_pressed"]
+[connection signal="toggled" from="Control/pngOutToggle" to="." method="_on_png_out_toggle_toggled"]
+[connection signal="files_selected" from="InterludeLoadPAK" to="." method="_on_interlude_load_pak_files_selected"]
+[connection signal="dir_selected" from="InterludeLoadFOLDER" to="." method="_on_fushigi_load_folder_dir_selected"]
