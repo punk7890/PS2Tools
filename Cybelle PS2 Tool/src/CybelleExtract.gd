@@ -15,7 +15,6 @@ var out_png:bool = true
 const width_key:int = 0x4355
 const height_key:int = 0x5441
 
-
 func _process(_delta):
 	var MEM = Performance.get_monitor(Performance.MEMORY_STATIC)
 	var MEM2 = Performance.get_monitor(Performance.MEMORY_STATIC_MAX)
@@ -25,7 +24,6 @@ func _process(_delta):
 		interludeMakeFiles()
 		chose_folder = false
 		interlude_files.clear()
-	
 	
 func _on_fushigi_load_folder_dir_selected(dir):
 	folder_path = dir
@@ -208,6 +206,7 @@ func interludeMakeFiles() -> void:
 					png_out = Image.create_from_data(width, height, false, Image.FORMAT_RGBA8, png_buffer)
 					png_out.save_png(folder_path + "/%s" % file_name + ".PNG")
 					png_buffer.clear()
+					
 							
 			elif file_name.ends_with(".GCD") and out_png:
 				if file_name == "REGION.GCD":
@@ -220,6 +219,17 @@ func interludeMakeFiles() -> void:
 					
 					png_buffer = interludeDecodeImage(mem_file, width, height, unk_bytes, mem_file_off)
 							
+					png_out = Image.create_from_data(width, height, false, Image.FORMAT_RGBA8, png_buffer)
+					png_out.save_png(folder_path + "/%s" % file_name + ".PNG")
+					png_buffer.clear()
+					
+			elif file_name.ends_with(".AVT") and out_png: #for Sentimental Prelude
+					mem_file_off = 0xA8
+					width = mem_file.decode_u16(mem_file_off) ^ width_key
+					height = mem_file.decode_u16(mem_file_off + 2) ^ height_key
+					unk_bytes = mem_file.decode_u32(mem_file_off + 4)
+					png_buffer = interludeDecodeImage(mem_file, width, height, unk_bytes, mem_file_off)
+					
 					png_out = Image.create_from_data(width, height, false, Image.FORMAT_RGBA8, png_buffer)
 					png_out.save_png(folder_path + "/%s" % file_name + ".PNG")
 					png_buffer.clear()
