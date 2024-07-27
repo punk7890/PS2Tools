@@ -1,6 +1,9 @@
 # PS2Tools
 Random PS2 tools and scripts.
 
+# Cybelle PS2 Tool
+Extracts, decrypts, and decompresses images from Interlude and Sentimental Prelude.
+
 # Fushigi no Umi no Nadia PS2 Extractor
 Extracts contents from Fushigi no Umi no Nadia and Seikai no Senki and decompresses compressed images.
 
