@@ -1,0 +1,89 @@
+[gd_scene load_steps=2 format=3 uid="uid://b58muftj2st80"]
+
+[ext_resource type="Script" path="res://src/circusExtract.gd" id="1_rnt2x"]
+
+[node name="CircusExtract" type="Node"]
+script = ExtResource("1_rnt2x")
+
+[node name="MemoryUsage" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.5
+offset_top = -23.0
+offset_right = 21.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -84.0
+offset_right = -128.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="LoadDAT" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 36.0
+offset_top = -15.0
+offset_right = 270.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Extract Circus .DAT"
+
+[node name="decompBmpButton" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 56.0
+offset_right = 239.0
+offset_bottom = 87.0
+button_pressed = true
+text = "Output Images As PNG"
+
+[node name="removeAlphaButton" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 87.0
+offset_right = 272.0
+offset_bottom = 118.0
+button_pressed = true
+text = "Remove Alpha Channel in PNGs"
+
+[node name="CircusLoadDAT" type="FileDialog" parent="."]
+title = "Open File(s)"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Open"
+file_mode = 1
+access = 2
+filters = PackedStringArray("*.DAT")
+
+[node name="CircusLoadFOLDER" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+
+[connection signal="pressed" from="Control/LoadDAT" to="." method="_on_load_dat_pressed"]
+[connection signal="toggled" from="Control/decompBmpButton" to="." method="_on_decomp_bmp_button_toggled"]
+[connection signal="toggled" from="Control/removeAlphaButton" to="." method="_on_remove_alpha_button_toggled"]
+[connection signal="files_selected" from="CircusLoadDAT" to="." method="_on_circus_load_dat_files_selected"]
+[connection signal="dir_selected" from="CircusLoadFOLDER" to="." method="_on_circus_load_folder_dir_selected"]
