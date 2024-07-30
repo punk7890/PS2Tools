@@ -14,6 +14,9 @@ var remove_alpha:bool = true
 var chose_dat:bool = false
 var dat_files:PackedStringArray
 
+func _ready():
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+
 func _process(_delta):
 	var MEM = Performance.get_monitor(Performance.MEMORY_STATIC)
 	var MEM2 = Performance.get_monitor(Performance.MEMORY_STATIC_MAX)
