@@ -15,7 +15,7 @@ var chose_dat:bool = false
 var dat_files:PackedStringArray
 
 func _ready():
-	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 
 func _process(_delta):
 	var MEM = Performance.get_monitor(Performance.MEMORY_STATIC)
@@ -137,8 +137,8 @@ func makeFiles() -> void:
 				mem_file.clear()
 				print("0x%X " % file_off, "0x%X " % file_size, "%s " % archive_name, "%s" % file_name)
 			else:
-				new_file = FileAccess.open(folder_path + "/%s" % file_name, FileAccess.WRITE)
 				dir.make_dir_recursive(file_name.get_base_dir())
+				new_file = FileAccess.open(folder_path + "/%s" % file_name, FileAccess.WRITE)
 				new_file.store_buffer(mem_file)
 				new_file.close()
 				mem_file.clear()
@@ -146,6 +146,7 @@ func makeFiles() -> void:
 		
 		file.close()
 		i += 1
+	print_rich("[color=green]Finished![/color]")
 	
 #func swap32(num) -> int:
 	#var swapped:int
