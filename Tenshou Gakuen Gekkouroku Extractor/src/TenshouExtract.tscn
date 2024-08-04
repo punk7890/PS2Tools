@@ -78,7 +78,7 @@ size = Vector2i(452, 400)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-filters = PackedStringArray("SLPM_665.66")
+filters = PackedStringArray("SLPM_665.66", "MAIN.ELF")
 
 [node name="LoadFOLDER" type="FileDialog" parent="."]
 title = "Open a Directory"

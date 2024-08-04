@@ -66,7 +66,15 @@ func decodeTenshou() -> void:
 	# load jump table from EXE
 	
 	file = FileAccess.open(elf_path, FileAccess.READ)
-	file.seek(0xCC188)
+	if file == null:
+		OS.alert("Couldn't load ELF!")
+		return
+		
+	if elf_path.get_file() == "MAIN.ELF": #Dengeki D93 demo
+		file.seek(0xCC288)
+	else:
+		file.seek(0xCC188)
+		
 	jmp_tbl = file.get_buffer(0x800)
 	file.close()
 	
@@ -76,11 +84,20 @@ func decodeTenshou() -> void:
 	# check user loaded archive name
 	
 	if archive_name == "OUT.BIN":		#at 0x0 * 0x800 in header.
-		header_size = 0x47800
+		if elf_path.get_file() == "MAIN.ELF": #Dengeki D93 demo check
+			header_size = 0x2A000
+		else:
+			header_size = 0x47800
 	elif archive_name == "MOVIE.BIN":
-		header_size = 0x1000
+		if elf_path.get_file() == "MAIN.ELF": #Dengeki D93 demo check
+			header_size = 0x800
+		else:
+			header_size = 0x1000
 	elif archive_name == "VOICE.BIN":
-		header_size = 0xB2800
+		if elf_path.get_file() == "MAIN.ELF": #Dengeki D93 demo check
+			header_size = 0x9800
+		else:
+			header_size = 0xB2800
 		
 	out_file.resize(header_size)
 	
@@ -154,7 +171,7 @@ func decodeTenshou() -> void:
 		i += 0x10
 	file.close()
 	archive_file.close()
-	print("Finished")
+	print_rich("[color=green]Finished[/color]")
 	
 func decodeFileTenshou(file:PackedByteArray, file_xor_key:int, jmp_tbl:PackedByteArray, size:int, sector_size:int) -> PackedByteArray:
 	var new_file:PackedByteArray
