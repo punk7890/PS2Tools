@@ -1,0 +1,129 @@
+[gd_scene load_steps=2 format=3 uid="uid://b58muftj2st80"]
+
+[ext_resource type="Script" path="res://src/TonkinExtract.gd" id="1_nnx8s"]
+
+[node name="TonkinExtract" type="Node"]
+script = ExtResource("1_nnx8s")
+
+[node name="MemoryUsage" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.5
+offset_top = -23.0
+offset_right = 21.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -28.0
+offset_right = -160.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LoadPfwFile" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -84.0
+offset_right = 163.0
+offset_bottom = -53.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Extract from PFW3 archive."
+text = "Extract .PFW
+"
+
+[node name="MakeCharacterImage" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 204.0
+offset_top = -84.0
+offset_right = 435.0
+offset_bottom = -53.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Make a TGA image out of a character file (AQCHAR.PFW)."
+text = "Make Character Image
+"
+
+[node name="DecompressFiles" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = -56.0
+offset_top = -8.0
+offset_right = 207.0
+offset_bottom = 23.0
+button_pressed = true
+text = "Decompress Compressed Files"
+
+[node name="TgaToggle" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = -56.0
+offset_top = 24.0
+offset_right = 207.0
+offset_bottom = 55.0
+button_pressed = true
+text = "Make TGA Images"
+
+[node name="TileOnlyToggle" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = -8.0
+offset_right = 487.0
+offset_bottom = 23.0
+text = "Make Tiled Image Only"
+
+[node name="LoadPFW" type="FileDialog" parent="."]
+title = "Open File(s)"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Open"
+file_mode = 1
+access = 2
+filters = PackedStringArray("*.PFW")
+
+[node name="LoadCHARFiles" type="FileDialog" parent="."]
+title = "Open File(s)"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Open"
+file_mode = 1
+access = 2
+filters = PackedStringArray("*.BIN")
+
+[node name="LoadFOLDER" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+
+[connection signal="pressed" from="Control/LoadPfwFile" to="." method="_on_load_pfw_file_pressed"]
+[connection signal="pressed" from="Control/MakeCharacterImage" to="." method="_on_make_character_image_pressed"]
+[connection signal="pressed" from="Control/DecompressFiles" to="." method="_on_decompress_files_pressed"]
+[connection signal="pressed" from="Control/TgaToggle" to="." method="_on_tga_toggle_pressed"]
+[connection signal="pressed" from="Control/TileOnlyToggle" to="." method="_on_tile_only_toggle_pressed"]
+[connection signal="files_selected" from="LoadPFW" to="." method="_on_load_pfw_files_selected"]
+[connection signal="files_selected" from="LoadCHARFiles" to="." method="_on_load_char_files_files_selected"]
+[connection signal="dir_selected" from="LoadFOLDER" to="." method="_on_load_folder_dir_selected"]
