@@ -20,5 +20,9 @@ Decrypts encrypted movies from Sakura Wars: So Long, My Love (Sakura Taisen V: S
 # Taiko Decrypter
 Decrypts encrypted bytes in zlib compressed files from Taiko no Tatsujin: Atsumare! Matsuri da!! Yondaime
 
+# Tonkin House Tool
+Extracts and decompresses files, and makes viewable images from the games: 
+Missing Blue, D-A Black (semi support), D-A White (semi support)
+
 # Tenshou Gakuen Gekkouroku Extractor
 Extracts and decrypts contents from Tenshou Gakuen Gekkouroku.
