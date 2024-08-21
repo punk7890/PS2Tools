@@ -1,0 +1,128 @@
+[gd_scene load_steps=2 format=3 uid="uid://b58muftj2st80"]
+
+[ext_resource type="Script" path="res://src/HuneXExtract.gd" id="1_lcfhx"]
+
+[node name="HuneXExtract" type="Node"]
+script = ExtResource("1_lcfhx")
+
+[node name="MemoryUsage" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.5
+offset_top = -23.0
+offset_right = 21.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -20.0
+offset_right = -72.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LoadCdBinFile" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -76.0
+offset_right = 163.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Extract CD.BIN
+"
+
+[node name="LoadExe" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -124.0
+offset_right = 163.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Load EXE
+"
+
+[node name="DecompressFiles" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = -56.0
+offset_top = -8.0
+offset_right = 207.0
+offset_bottom = 23.0
+button_pressed = true
+text = "Decompress Compressed Files"
+
+[node name="ConvertTGA" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = -56.0
+offset_top = 16.0
+offset_right = 207.0
+offset_bottom = 47.0
+button_pressed = true
+text = "Convert Images to TGA Files"
+
+[node name="DebugOutput" type="CheckBox" parent="Control"]
+layout_mode = 0
+offset_left = -56.0
+offset_top = 40.0
+offset_right = 207.0
+offset_bottom = 71.0
+text = "Output Decompressed Images (Debug)"
+
+[node name="LoadBIN" type="FileDialog" parent="."]
+title = "Open File(s)"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Open"
+file_mode = 1
+access = 2
+filters = PackedStringArray("CD.BIN")
+
+[node name="LoadExe" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("SLPM_657.17", "SLPM_655.85")
+
+[node name="LoadFOLDER" type="FileDialog" parent="."]
+title = "Open a Directory"
+initial_position = 2
+size = Vector2i(452, 400)
+ok_button_text = "Select Current Folder"
+file_mode = 2
+access = 2
+
+[connection signal="pressed" from="Control/LoadCdBinFile" to="." method="_on_load_cd_bin_file_pressed"]
+[connection signal="pressed" from="Control/LoadExe" to="." method="_on_load_exe_pressed"]
+[connection signal="pressed" from="Control/DecompressFiles" to="." method="_on_decompress_files_pressed"]
+[connection signal="pressed" from="Control/ConvertTGA" to="." method="_on_convert_tga_pressed"]
+[connection signal="pressed" from="Control/DebugOutput" to="." method="_on_debug_output_pressed"]
+[connection signal="files_selected" from="LoadBIN" to="." method="_on_load_bin_files_selected"]
+[connection signal="file_selected" from="LoadExe" to="." method="_on_load_exe_file_selected"]
+[connection signal="dir_selected" from="LoadFOLDER" to="." method="_on_load_folder_dir_selected"]
