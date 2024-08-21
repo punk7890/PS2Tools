@@ -11,6 +11,10 @@ Extracts, decrypts, and decompresses images from Interlude and Sentimental Prelu
 # Fushigi no Umi no Nadia PS2 Extractor
 Extracts contents from Fushigi no Umi no Nadia and Seikai no Senki and decompresses compressed images.
 
+# HuneX Tool
+Extracts files, decompresses files and converts (most) images in the following games:
+Tsuki wa Higashi ni Hi wa Nishi ni: Operation Sanctuary, Princess Holiday: Korogaru Ringo Tei Senya Ichiya
+
 # Sakura 1 PS2 Movie Decrypter
 Decrypts encrypted movies from Sakura Taisen: Atsuki Chishio Ni.
 
