@@ -81,7 +81,7 @@ offset_top = 16.0
 offset_right = 207.0
 offset_bottom = 47.0
 button_pressed = true
-text = "Convert Images to TGA Files"
+text = "Convert Images to PNG Files"
 
 [node name="DebugOutput" type="CheckBox" parent="Control"]
 layout_mode = 0
