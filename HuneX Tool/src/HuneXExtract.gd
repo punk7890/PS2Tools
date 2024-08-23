@@ -4,6 +4,7 @@ extends Node
 @onready var load_bin: FileDialog = $LoadBIN
 @onready var load_folder: FileDialog = $LoadFOLDER
 @onready var load_exe: FileDialog = $LoadExe
+@onready var debug_output_button: CheckBox = $Control/DebugOutput
 
 
 var chose_folder:bool = false
@@ -55,6 +56,10 @@ func _on_load_exe_file_selected(path: String) -> void:
 	
 func _on_decompress_files_pressed():
 	decomp_file = !decomp_file
+	if decomp_file:
+		debug_output_button.disabled = false
+	elif !decomp_file:
+		debug_output_button.disabled = true
 		
 func _on_convert_tga_pressed() -> void:
 	make_tga = !make_tga
@@ -129,57 +134,48 @@ func hunexMakeFiles() -> void:
 								out_file = FileAccess.open(folder_path + "/%s" % files + "%s" % file_extension, FileAccess.WRITE)
 								out_file.store_buffer(mem_new_file)
 								out_file.close()
+								mem_file.clear()
+								
+								files += 1
+								start_off += 4
+								print("0x%X " % file_off, "0x%X " % file_size, "%s" % files, "%s" % file_extension)
+								continue
 								
 							mem_file.clear()
 							
-							var image_type:int = 1
-							var has_palette:bool = true
-							var bits_per_color:int = 32
-							var bpp:int = 8
-							var width:int = mem_new_file.decode_u16(2)
-							var height:int = mem_new_file.decode_u16(4)
-							var tga_header:PackedByteArray = makeTGAHeader(has_palette, image_type, bits_per_color, bpp, width, height)
-							
-							final_image.append_array(tga_header)
-							tga_header.clear()
-							
-							var image:PackedByteArray = mem_new_file.slice(mem_new_file.size() - 0x410, - 0x10) #pallete first
-							image = unswizzle_palette(image)
-							
-							var swap:PackedByteArray
-							swap.resize(4)
-							# swap BGR to RGB and leave alpha channel
-							for k in range(0, image.size(), 4):
-								swap[0] = image.decode_u8(k)
-								swap[1] = image.decode_u8(k + 1)
-								swap[2] = image.decode_u8(k + 2)
-								image.encode_u8(k, swap[2])
-								image.encode_u8(k + 1, swap[1])
-								image.encode_u8(k + 2, swap[0])
-							swap.clear()
-							
-							final_image.append_array(image)
-							image.clear()
-							
-							image = mem_new_file.slice(0x20, mem_new_file.size() - 0x430) #image data
-							final_image.append_array(image)
-							image.clear()
-							
-							out_file = FileAccess.open(folder_path + "/%s" % files + "%s" % file_extension + ".TGA", FileAccess.WRITE)
-							out_file.store_buffer(final_image)
-							out_file.close()
-							final_image.clear()
-							mem_new_file.clear()
+							offset = 0
+							i = 0
+							while offset < mem_new_file.size():
+								if mem_new_file.decode_u16(offset) == 0:
+									break
+								png = processImg(mem_new_file)
+								png.save_png(folder_path + "/%s" % files + "%s" % file_extension + "_" + str(i) + ".png")
+								i += 1
+							i = 0
+							offset = 0
 						else:
 							out_file = FileAccess.open(folder_path + "/%s" % files + "%s" % file_extension, FileAccess.WRITE)
 							out_file.store_buffer(mem_file)
 							out_file.close()
 					else:
-						if files in range(34, 19797):
+						if files in range(2, 4) or files in range(34, 19797):
 							file_extension = ".adpcm"
-						elif files in range(22289, 22332):
+						elif files == 4:
+							file_extension = ".ltex"
+							
+							offset = 0
+							i = 0
+							while offset < mem_file.size():
+								if mem_file.decode_u16(offset) == 0:
+									break
+								png = processImg(mem_file)
+								png.save_png(folder_path + "/%s" % files + "%s" % file_extension + "_" + str(i) + ".png")
+								i += 1
+							i = 0
+							offset = 0
+						elif files in range(22289, 22333):
 							file_extension = ".adpcm"
-						elif files in range(22333, 22336):
+						elif files in range(22333, 22337):
 							file_extension = ".pss"
 						else:
 							file_extension = ".bin"
@@ -231,6 +227,7 @@ func hunexMakeFiles() -> void:
 								out_file = FileAccess.open(folder_path + "/%s" % files + "%s" % file_extension, FileAccess.WRITE)
 								out_file.store_buffer(mem_new_file)
 								out_file.close()
+								mem_file.clear()
 								
 								files += 1
 								start_off += 4
@@ -374,11 +371,9 @@ func processImg(data:PackedByteArray) -> Image:
 			var index:int = imgdat[y * w + x] * 4
 			var end_index:int = index + 4
 			resdata.append_array(paldat.slice(index, end_index))
-	#image.append_array(imgdat)
-	#image.append_array(paldat)
-	#image.append_array(resdata)
+			
 	var png:Image = Image.create_from_data(w, h, false, 5, resdata)
-	#png.save_png("C:/Users/punk_/Desktop/test/1159.png")
+	
 	return png
 	
 func tobpp(data:PackedByteArray, bpp:int) -> PackedByteArray:
