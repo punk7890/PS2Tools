@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbu4ylt3frp3u"]
+
+[ext_resource type="Script" path="res://src/scenes/main.gd" id="1_yxk4s"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yxk4s")
+
+[node name="MemoryUsage" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -0.5
+offset_top = -23.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="GameTypeSelector" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 140.0
+offset_right = 69.0
+offset_bottom = 171.0
+grow_horizontal = 2
+grow_vertical = 2
+allow_reselect = true
+item_count = 2
+popup/item_0/text = "Futakoi, Futakoijima. Ichigo 100% Strawberry Diary"
+popup/item_1/text = "PIA Carrot 3"
+popup/item_1/id = 1
+
+[node name="GameTypeText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 424.0
+offset_right = 684.0
+offset_bottom = 447.0
+
+[node name="GameTypeSubText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 512.0
+offset_right = 748.0
+offset_bottom = 535.0
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[connection signal="item_selected" from="GameTypeSelector" to="." method="_on_game_type_selector_item_selected"]
